@@ -1,3 +1,1 @@
-premiere ligne
-ma deuxieme ligne
-fin du fichier.
+Ceci represente la phrase de test pour ce programme vous etes libre d'inserer la votre par la suite.

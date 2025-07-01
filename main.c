@@ -1,26 +1,31 @@
-#include  <stdio.h>
-#include  <stdlib.h>
-#include  <string.h>
+#include "head.h"
 
-#define tailleMax 256
 
 int main()
 {
     FILE *fichier;
     char ligne[tailleMax];
+    int choix;
 
-    fichier = fopen("fichier.txt", "r");
-    if (fichier == NULL) {
-        perror("Erreur lors de l'ouverture du fichier");
-        return EXIT_FAILURE;
-    }
-
-    printf("\nContenu du fichier:\n");
-    while (fgets(ligne, tailleMax, fichier) != NULL){
-        printf("%s", ligne);
-    }
     printf("\n...Mini-analyseur de texte ...\n");
+    while(choix != 99){
+        choix = menu();
+    
+        switch (choix)
+        {
+        case 1:
+            remplirFichier(ligne, fichier);
+            break;
+        case 2:
+            lireFichier(ligne, fichier);
+            break;
+        case 3:
+            viderFichier(fichier);
+            break;
+        default:
+            break;
+        }
+    }
 
-    fclose(fichier);
-    return (0);
+   return (0);
 }
