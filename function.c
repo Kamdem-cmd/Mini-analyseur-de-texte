@@ -8,6 +8,7 @@ int menu(){
     printf("1. Remplire le fichier\n");
     printf("2. Lire le contenu du fichier\n");
     printf("3. Effacer le contenu du fichier\n");
+    printf("4. Nombre total de caractere\n");
     printf("99. Quitter\n");
 
     printf("votre choix: ");
@@ -63,4 +64,25 @@ int viderFichier(FILE *fichier){
 
     fclose(fichier);
     return (0);
+}
+
+int nombreCaractere(char *ligne, FILE *fichier){
+    int nbreCaracter = 0;
+    int nbreligne = 0;
+
+    fichier = fopen("fichier.txt", "r");
+    if (fichier == NULL) {
+        perror("Erreur lors de l'ouverture du fichier");
+        return EXIT_FAILURE;
+    }
+
+    while (fgets(ligne, tailleMax, fichier) != NULL){
+        nbreligne += 1;
+        nbreCaracter += strlen(ligne);
+        if(nbreCaracter > 0) nbreCaracter--;
+    }
+    printf("nombre de ligne: %d\n", nbreligne);
+
+    fclose(fichier);
+    return nbreCaracter;
 }

@@ -22,10 +22,15 @@ int main()
         case 3:
             viderFichier(fichier);
             break;
+        case 4:
+            printf("nombre de caractere: %zu\n", nombreCaractere(ligne, fichier));
+            break;
         default:
             break;
         }
     }
+
+    
 
    return (0);
 }
