@@ -8,7 +8,7 @@ int menu(){
     printf("1. Remplire le fichier\n");
     printf("2. Lire le contenu du fichier\n");
     printf("3. Effacer le contenu du fichier\n");
-    printf("4. Nombre total de caractere\n");
+    printf("4. Analyse du texte\n");
     printf("99. Quitter\n");
 
     printf("votre choix: ");
@@ -69,7 +69,9 @@ int viderFichier(FILE *fichier){
 int nombreCaractere(char *ligne, FILE *fichier){
     int nbreCaracter = 0;
     int nbreligne = 0;
+    int nbreMot = 0;
 
+    // Precaution de lecture de fichier, signale l'erreur en cas d'echec
     fichier = fopen("fichier.txt", "r");
     if (fichier == NULL) {
         perror("Erreur lors de l'ouverture du fichier");
@@ -77,12 +79,24 @@ int nombreCaractere(char *ligne, FILE *fichier){
     }
 
     while (fgets(ligne, tailleMax, fichier) != NULL){
+        // nombre de ligne
         nbreligne += 1;
+        //nombre de caractere
         nbreCaracter += strlen(ligne);
         if(nbreCaracter > 0) nbreCaracter--;
+        // nombre de mot
+        int i = 0;
+        while(ligne[i] != '\0'){
+            if(ligne[i] != ' ' && ligne[i+1] == ' ' || ligne[i] != ' ' && ligne[i+1] == '\0'){
+                nbreMot += 1;
+            }
+            i++;
+        }
     }
+    printf("nombre de mot: %d\n", nbreMot);
     printf("nombre de ligne: %d\n", nbreligne);
-
+    //fermeture du fichier
     fclose(fichier);
     return nbreCaracter;
 }
+
