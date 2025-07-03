@@ -81,12 +81,14 @@ int nombreCaractere(char *ligne, FILE *fichier){
     while (fgets(ligne, tailleMax, fichier) != NULL){
         // nombre de ligne
         nbreligne += 1;
-        //nombre de caractere
-        nbreCaracter += strlen(ligne);
-        if(nbreCaracter > 0) nbreCaracter--;
-        // nombre de mot
+
         int i = 0;
         while(ligne[i] != '\0'){
+            //nombre de caractere
+            if(ligne[i] != ' ' && ligne[i] != '\n') {
+              nbreCaracter ++;  
+            }
+            // nombre de mot
             if(ligne[i] != ' ' && ligne[i+1] == ' ' || ligne[i] != ' ' && ligne[i+1] == '\0'){
                 nbreMot += 1;
             }
