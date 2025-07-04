@@ -25,6 +25,9 @@ int main()
         case 4:
             printf("nombre de caractere: %zu\n", nombreCaractere(ligne, fichier));
             break;
+        case 5:
+            countLettre(fichier);
+            break;
         default:
             break;
         }

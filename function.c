@@ -1,6 +1,7 @@
 #include "head.h"
 
 #define tailleMax 256
+#define tailleLettre 26
 
 int menu(){
     int choix;
@@ -9,6 +10,7 @@ int menu(){
     printf("2. Lire le contenu du fichier\n");
     printf("3. Effacer le contenu du fichier\n");
     printf("4. Analyse du texte\n");
+    printf("5. Occurence des lettres\n");
     printf("99. Quitter\n");
 
     printf("votre choix: ");
@@ -73,32 +75,70 @@ int nombreCaractere(char *ligne, FILE *fichier){
 
     // Precaution de lecture de fichier, signale l'erreur en cas d'echec
     fichier = fopen("fichier.txt", "r");
-    if (fichier == NULL) {
+    if(fichier == NULL) {
         perror("Erreur lors de l'ouverture du fichier");
         return EXIT_FAILURE;
     }
 
-    while (fgets(ligne, tailleMax, fichier) != NULL){
+    while(fgets(ligne, tailleMax, fichier) != NULL){
         // nombre de ligne
         nbreligne += 1;
 
         int i = 0;
         while(ligne[i] != '\0'){
-            //nombre de caractere
-            if(ligne[i] != ' ' && ligne[i] != '\n') {
-              nbreCaracter ++;  
-            }
             // nombre de mot
-            if(ligne[i] != ' ' && ligne[i+1] == ' ' || ligne[i] != ' ' && ligne[i+1] == '\0'){
-                nbreMot += 1;
-            }
+            if(ligne[i] != ' ' && ligne[i+1] == ' ' || ligne[i] != ' ' && ligne[i+1] == '\0') nbreMot += 1;
+
+            //nombre de caractere
+            if(ligne[i] != ' ' && ligne[i] != '\n') nbreCaracter ++;
             i++;
         }
     }
-    printf("nombre de mot: %d\n", nbreMot);
-    printf("nombre de ligne: %d\n", nbreligne);
     //fermeture du fichier
     fclose(fichier);
+
+    printf("nombre de mot: %d\n", nbreMot);
+    printf("nombre de ligne: %d\n", nbreligne);
+
     return nbreCaracter;
 }
 
+int countLettre(FILE *fichier){
+    int caractere;
+    int occurrences[tailleLettre] = {0};
+    int i = 0;
+
+    fichier = fopen("fichier.txt", "r");
+
+    // Vérifier si l'ouverture du fichier a réussi
+    if(fichier == NULL) {
+        perror("Erreur lors de l'ouverture du fichier");
+        return (-1);
+    }
+
+    while((caractere = fgetc(fichier)) != EOF){
+
+        caractere = tolower(caractere);
+
+        if (isalpha(caractere)) {
+            // Calculer l'indice correspondant dans le tableau (0 pour 'a', 1 pour 'b', etc.)
+            int index = caractere - 'a';
+            // Incrémenter le compteur pour cette lettre
+            occurrences[index]++;
+        }
+
+    }
+
+    fclose(fichier);
+
+    printf("\nOccurrences de chaque lettre (insensible a la casse) :\n");
+    for (i; i < tailleLettre; i++) {
+        if(occurrences[i] > 0){
+            // Convertir l'indice en lettre correspondante
+            char lettre = 'a' + i;
+            printf("'%c' : %d\n", lettre, occurrences[i]);
+        }
+    }
+
+    return (0);
+}
